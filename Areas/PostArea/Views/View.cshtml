@@ -1,0 +1,29 @@
+﻿@model SocialMediaProject.Models.Post
+
+@{
+    ViewData["Title"] = @Model.Title;
+}
+
+<div class="container mt-4">
+    <h1>@Model.Title</h1>
+    <p>@Model.Content</p>
+    <small>Posted by @Model.User.Username on @Model.CreatedAt.ToShortDateString()</small>
+
+    <h2>Comments</h2>
+    @if (Model.Comments.Any())
+    {
+        <ul class="list-group">
+            @foreach (var comment in Model.Comments)
+            {
+                <li class="list-group-item">
+                    @comment.Content
+                    <small class="text-muted">- @comment.User.Username</small>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No comments yet.</p>
+    }
+</div>
