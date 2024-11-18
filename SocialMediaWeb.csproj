@@ -18,7 +18,6 @@
   <ItemGroup>
     <Folder Include="Areas\PostArea\Views\" />
     <Folder Include="Areas\ForumArea\Views\" />
-    <Folder Include="Areas\UserArea\Views\" />
   </ItemGroup>
 
 </Project>
