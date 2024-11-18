@@ -16,11 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\PostArea\Controllers\" />
     <Folder Include="Areas\PostArea\Views\" />
     <Folder Include="Areas\ForumArea\Views\" />
     <Folder Include="Areas\UserArea\Views\" />
-    <Folder Include="Views\Home\" />
   </ItemGroup>
 
 </Project>
