@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SocialMediaWeb.Models;
 
 namespace SocialMediaProject.Areas.UserArea.Controllers
@@ -50,11 +51,20 @@ namespace SocialMediaProject.Areas.UserArea.Controllers
             return RedirectToAction("Login");
         }
 
-        public IActionResult Profile()
+        public async Task<IActionResult> Profile()
         {
-            var userId = TempData["UserId"];
-            var user = _dbContext.Users.Find(userId);
-            return View(user);
+            if (TempData["UserId"] is int userId)
+            {
+                var user = await _dbContext.Users
+                    .Include(u => u.Posts)
+                    .FirstOrDefaultAsync(u => u.Id == userId);
+
+                if (user != null)
+                {
+                    return View(user);
+                }
+            }
+            return RedirectToAction("Login");
         }
     }
 }
