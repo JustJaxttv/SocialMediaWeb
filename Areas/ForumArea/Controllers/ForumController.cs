@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SocialMediaWeb.Data;
+using SocialMediaWeb.Models;
 
 namespace SocialMediaWeb.Areas.ForumArea.Controllers
 {
@@ -16,15 +17,25 @@ namespace SocialMediaWeb.Areas.ForumArea.Controllers
 
         public IActionResult Browsing()
         {
-            var forums = _dbContext.Forums.ToList();
-            return View(forums);
+            ViewBag.Forums = _dbContext.Forums?.ToList() ?? new List<Forum>();
+
+            ViewBag.Title = "Browse Forums";
+
+            return View();
         }
 
         public IActionResult View(int id)
         {
             var forum = _dbContext.Forums
                 .Include(f => f.Posts)
+                    .ThenInclude(p => p.User)
                 .FirstOrDefault(f => f.Id == id);
+
+            if (forum == null)
+            {
+                return NotFound();
+            }
+
             return View(forum);
         }
     }

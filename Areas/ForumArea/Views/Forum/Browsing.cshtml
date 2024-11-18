@@ -1,0 +1,26 @@
+﻿@model IEnumerable<SocialMediaWeb.Models.Forum>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = ViewBag.Title ?? "Forums";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (ViewBag.Forums != null && ViewBag.Forums.Count > 0)
+{
+    <ul class="list-group">
+        @foreach (var forum in ViewBag.Forums)
+        {
+            <li class="list-group-item">
+                <h3>@forum.Title</h3>
+                <p>@forum.Description</p>
+                <a href="@Url.Action("View", "Forum", new { area = "ForumArea", id = forum.Id })" class="btn btn-primary">View Forum</a>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>No forums are available at the moment.</p>
+}

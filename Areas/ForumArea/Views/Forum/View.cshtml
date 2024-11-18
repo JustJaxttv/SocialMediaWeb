@@ -1,0 +1,28 @@
+﻿@model SocialMediaWeb.Models.Forum
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = @Model.Title;
+}
+
+<h1>@Model.Title</h1>
+<p>@Model.Description</p>
+
+@if (Model.Posts != null && Model.Posts.Count > 0)
+{
+    <ul class="list-group">
+        @foreach (var post in Model.Posts)
+        {
+            <li class="list-group-item">
+                <h3>@post.Title</h3>
+                <p>@post.Content</p>
+                <p>Posted by: @(post.User != null ? post.User.Username : "Unknown User")</p>
+                <a href="@Url.Action("Post", "Post", "View", new { id = post.Id })" class="btn btn-primary">View Post</a>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>No posts available in this forum.</p>
+}

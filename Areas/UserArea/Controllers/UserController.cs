@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SocialMediaWeb.Data;
 using SocialMediaWeb.Models;
+using System.Net.WebSockets;
 
 namespace SocialMediaWeb.Areas.UserArea.Controllers
 {
@@ -9,22 +10,34 @@ namespace SocialMediaWeb.Areas.UserArea.Controllers
     public class UserController : Controller
     {
         private readonly DBContext _dbContext;
+        private readonly ILogger<UserController> _logger;
 
         public UserController(DBContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public IActionResult Register() => View();
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
 
         [HttpPost]
-        public IActionResult Register(User model)
+        public IActionResult RegisterUser(User model)
         {
             if (ModelState.IsValid)
             {
-                _dbContext.Users.Add(model);
-                _dbContext.SaveChanges();
-                return RedirectToAction("Login");
+                try
+                {
+                    _dbContext.Users.Add(model); 
+                    _dbContext.SaveChanges();    
+                    return RedirectToAction("Login", "User", new { area = "UserArea"}); 
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", "An error occurred while registering. Please try again.");
+                }
             }
             return View(model);
         }
