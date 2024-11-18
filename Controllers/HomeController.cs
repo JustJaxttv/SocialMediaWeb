@@ -25,16 +25,9 @@ namespace SocialMediaProject.Controllers
                 .Take(5)
                 .ToList();
 
-            return View();
-        }
+            ViewBag.RecentPosts = recentPosts;
+            ViewBag.PopularForums = popularForums;
 
-        public IActionResult About()
-        {
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
             return View();
         }
     }

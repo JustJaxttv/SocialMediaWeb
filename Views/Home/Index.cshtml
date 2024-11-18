@@ -1,5 +1,46 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Home";
 }
+
+<div class="container mt-4">
+    <h1>Recent Posts</h1>
+    <div class="row">
+        @if (ViewBag.RecentPosts != null && ViewBag.RecentPosts.Count > 0)
+        {
+            foreach (var post in ViewBag.RecentPosts)
+            {
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5>@post.Title</h5>
+                            <p>@post.Content</p>
+                            <small>Posted by @post.User.Username on @post.CreatedAt.ToShortDateString()</small>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p>No recent posts available.</p>
+        }
+    </div>
+
+    <h2>Popular Forums</h2>
+    <ul class="list-group">
+        @if (ViewBag.PopularForums != null && ViewBag.PopularForums.Count > 0)
+        {
+            foreach (var forum in ViewBag.PopularForums)
+            {
+                <li class="list-group-item">
+                    <strong>@forum.Title</strong> - @forum.Description
+                    <span class="badge bg-secondary">@forum.Posts.Count posts</span>
+                </li>
+            }
+        }
+        else
+        {
+            <p>No popular forums available.</p>
+        }
+    </ul>
+</div>
