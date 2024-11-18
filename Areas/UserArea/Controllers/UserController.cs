@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SocialMediaWeb.Data;
 using SocialMediaWeb.Models;
 
-namespace SocialMediaProject.Areas.UserArea.Controllers
+namespace SocialMediaWeb.Areas.UserArea.Controllers
 {
     [Area("UserArea")]
     public class UserController : Controller

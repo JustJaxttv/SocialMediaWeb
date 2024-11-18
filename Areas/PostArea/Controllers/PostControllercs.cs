@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SocialMediaWeb.Models;
+using SocialMediaWeb.Data;
 
-namespace SocialMediaProject.Areas.PostArea.Controllers
+namespace SocialMediaWeb.Areas.PostArea.Controllers
 {
     [Area("PostArea")]
     public class PostController : Controller

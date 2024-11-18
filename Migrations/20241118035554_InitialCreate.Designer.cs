@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SocialMediaWeb.Models;
+using SocialMediaWeb.Data;
 
 #nullable disable
 
 namespace SocialMediaWeb.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20241118013328_InitialCreate")]
+    [Migration("20241118035554_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,7 +39,7 @@ namespace SocialMediaWeb.Migrations
                     b.Property<int>("PostId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -49,6 +49,22 @@ namespace SocialMediaWeb.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Comments");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Content = "Great post!",
+                            PostId = 1,
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Content = "Looking forward to this discussion!",
+                            PostId = 2,
+                            UserId = 1
+                        });
                 });
 
             modelBuilder.Entity("SocialMediaWeb.Models.Forum", b =>
@@ -73,6 +89,22 @@ namespace SocialMediaWeb.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Forums");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2024, 11, 18, 3, 55, 54, 326, DateTimeKind.Utc).AddTicks(814),
+                            Description = "Talk about anything here",
+                            Title = "General Discussion"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(2024, 11, 18, 3, 55, 54, 326, DateTimeKind.Utc).AddTicks(815),
+                            Description = "Discuss the latest in technology",
+                            Title = "Tech News"
+                        });
                 });
 
             modelBuilder.Entity("SocialMediaWeb.Models.Post", b =>
@@ -97,7 +129,7 @@ namespace SocialMediaWeb.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -107,6 +139,26 @@ namespace SocialMediaWeb.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Posts");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Content = "Welcome to the General Discussion forum!",
+                            CreatedAt = new DateTime(2024, 11, 18, 3, 55, 54, 326, DateTimeKind.Utc).AddTicks(828),
+                            ForumId = 1,
+                            Title = "First Post",
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Content = "Let's discuss new tech trends for 2024!",
+                            CreatedAt = new DateTime(2024, 11, 18, 3, 55, 54, 326, DateTimeKind.Utc).AddTicks(829),
+                            ForumId = 2,
+                            Title = "Tech Innovations 2024",
+                            UserId = 2
+                        });
                 });
 
             modelBuilder.Entity("SocialMediaWeb.Models.User", b =>
@@ -135,6 +187,24 @@ namespace SocialMediaWeb.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2024, 11, 18, 3, 55, 54, 326, DateTimeKind.Utc).AddTicks(680),
+                            Email = "user1@example.com",
+                            PasswordHash = "password1",
+                            Username = "User1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(2024, 11, 18, 3, 55, 54, 326, DateTimeKind.Utc).AddTicks(685),
+                            Email = "user2@example.com",
+                            PasswordHash = "password2",
+                            Username = "User2"
+                        });
                 });
 
             modelBuilder.Entity("SocialMediaWeb.Models.Comment", b =>
@@ -148,8 +218,7 @@ namespace SocialMediaWeb.Migrations
                     b.HasOne("SocialMediaWeb.Models.User", "User")
                         .WithMany("Comments")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Post");
 
@@ -167,8 +236,7 @@ namespace SocialMediaWeb.Migrations
                     b.HasOne("SocialMediaWeb.Models.User", "User")
                         .WithMany("Posts")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Forum");
 

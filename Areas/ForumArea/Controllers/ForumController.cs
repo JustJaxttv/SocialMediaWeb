@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SocialMediaWeb.Models;
+using SocialMediaWeb.Data;
 
-namespace SocialMediaProject.Areas.ForumArea.Controllers
+namespace SocialMediaWeb.Areas.ForumArea.Controllers
 {
     [Area("ForumArea")]
     public class ForumController : Controller

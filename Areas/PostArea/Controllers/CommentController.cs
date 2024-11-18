@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SocialMediaWeb.Models;
+using SocialMediaWeb.Data;
 
-namespace SocialMediaProject.Areas.PostArea.Controllers
+namespace SocialMediaWeb.Areas.PostArea.Controllers
 {
     [Area("PostArea")]
     public class CommentController : Controller

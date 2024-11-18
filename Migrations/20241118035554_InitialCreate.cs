@@ -48,7 +48,7 @@ namespace SocialMediaWeb.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: true),
                     ForumId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -66,7 +66,7 @@ namespace SocialMediaWeb.Migrations
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -76,7 +76,7 @@ namespace SocialMediaWeb.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: true),
                     PostId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -93,8 +93,46 @@ namespace SocialMediaWeb.Migrations
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Forums",
+                columns: new[] { "Id", "CreatedAt", "Description", "Title" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2024, 11, 18, 3, 55, 54, 326, DateTimeKind.Utc).AddTicks(814), "Talk about anything here", "General Discussion" },
+                    { 2, new DateTime(2024, 11, 18, 3, 55, 54, 326, DateTimeKind.Utc).AddTicks(815), "Discuss the latest in technology", "Tech News" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "CreatedAt", "Email", "PasswordHash", "Username" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2024, 11, 18, 3, 55, 54, 326, DateTimeKind.Utc).AddTicks(680), "user1@example.com", "password1", "User1" },
+                    { 2, new DateTime(2024, 11, 18, 3, 55, 54, 326, DateTimeKind.Utc).AddTicks(685), "user2@example.com", "password2", "User2" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Posts",
+                columns: new[] { "Id", "Content", "CreatedAt", "ForumId", "Title", "UserId" },
+                values: new object[] { 1, "Welcome to the General Discussion forum!", new DateTime(2024, 11, 18, 3, 55, 54, 326, DateTimeKind.Utc).AddTicks(828), 1, "First Post", 1 });
+
+            migrationBuilder.InsertData(
+                table: "Posts",
+                columns: new[] { "Id", "Content", "CreatedAt", "ForumId", "Title", "UserId" },
+                values: new object[] { 2, "Let's discuss new tech trends for 2024!", new DateTime(2024, 11, 18, 3, 55, 54, 326, DateTimeKind.Utc).AddTicks(829), 2, "Tech Innovations 2024", 2 });
+
+            migrationBuilder.InsertData(
+                table: "Comments",
+                columns: new[] { "Id", "Content", "PostId", "UserId" },
+                values: new object[] { 1, "Great post!", 1, 2 });
+
+            migrationBuilder.InsertData(
+                table: "Comments",
+                columns: new[] { "Id", "Content", "PostId", "UserId" },
+                values: new object[] { 2, "Looking forward to this discussion!", 2, 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_PostId",

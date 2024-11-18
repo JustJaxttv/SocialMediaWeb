@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using SocialMediaWeb.Models;
+using SocialMediaWeb.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SocialMediaWeb.Data;
 using SocialMediaWeb.Models;
-using System.Linq;
 
-namespace SocialMediaProject.Controllers
+namespace SocialMediaWeb.Controllers
 {
     public class HomeController : Controller
     {
@@ -25,8 +25,8 @@ namespace SocialMediaProject.Controllers
                 .Take(5)
                 .ToList();
 
-            ViewBag.RecentPosts = recentPosts;
-            ViewBag.PopularForums = popularForums;
+            ViewBag.RecentPosts = recentPosts ?? new List<Post>();
+            ViewBag.PopularForums = popularForums ?? new List<Forum>();
 
             return View();
         }

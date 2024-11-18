@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SocialMediaWeb.Models;
 
-namespace SocialMediaProject.Data
+namespace SocialMediaWeb.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class DBContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+        public DBContext(DbContextOptions<DBContext> options) : base(options) { }
 
         public DbSet<User> Users { get; set; }
         public DbSet<Post> Posts { get; set; }
@@ -16,7 +16,30 @@ namespace SocialMediaProject.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Seed data
+            modelBuilder.Entity<Post>()
+                .HasOne(p => p.User)
+                .WithMany(u => u.Posts)
+                .HasForeignKey(p => p.UserId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<Comment>()
+                .HasOne(c => c.User)
+                .WithMany(u => u.Comments)
+                .HasForeignKey(c => c.UserId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<Comment>()
+                .HasOne(c => c.Post)
+                .WithMany(p => p.Comments)
+                .HasForeignKey(c => c.PostId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Post>()
+                .HasOne(p => p.Forum)
+                .WithMany(f => f.Posts)
+                .HasForeignKey(p => p.ForumId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<User>().HasData(
                 new User { Id = 1, Username = "User1", Email = "user1@example.com", PasswordHash = "password1", CreatedAt = DateTime.UtcNow },
                 new User { Id = 2, Username = "User2", Email = "user2@example.com", PasswordHash = "password2", CreatedAt = DateTime.UtcNow }
