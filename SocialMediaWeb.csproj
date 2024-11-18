@@ -16,13 +16,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\" />
-    <Folder Include="PostArea\Controllers\" />
-    <Folder Include="PostArea\Views\" />
-    <Folder Include="ForumArea\Controllers\" />
-    <Folder Include="ForumArea\Views\" />
-    <Folder Include="UserArea\Controllers\" />
-    <Folder Include="UserArea\Views\" />
+    <Folder Include="Areas\PostArea\Controllers\" />
+    <Folder Include="Areas\PostArea\Views\" />
+    <Folder Include="Areas\ForumArea\Views\" />
+    <Folder Include="Areas\UserArea\Views\" />
     <Folder Include="Views\Home\" />
   </ItemGroup>
 
