@@ -1,12 +1,14 @@
 ﻿@{
     ViewData["Title"] = "Home";
+    var recentPosts = ViewBag.RecentPosts as List<SocialMediaWeb.Models.Post>;
+    var popularForums = ViewBag.PopularForums as List<SocialMediaWeb.Models.Forum>;
 }
 
 <div class="recent-posts">
     <h2>Recent Posts</h2>
-    @if (ViewBag.RecentPosts != null && ViewBag.RecentPosts.Any())
+    @if (recentPosts != null && recentPosts.Any())
     {
-        foreach (var post in ViewBag.RecentPosts)
+        foreach (var post in recentPosts)
         {
             <div>
                 <h3>@post.Title</h3>
@@ -22,9 +24,9 @@
 
 <div class="popular-forums">
     <h2>Popular Forums</h2>
-    @if (ViewBag.PopularForums != null && ViewBag.PopularForums.Any())
+    @if (popularForums != null && popularForums.Any())
     {
-        foreach (var forum in ViewBag.PopularForums)
+        foreach (var forum in popularForums)
         {
             <div>
                 <h3>@forum.Title</h3>
