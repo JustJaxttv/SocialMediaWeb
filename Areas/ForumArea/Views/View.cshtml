@@ -1,0 +1,33 @@
+﻿@model SocialMediaProject.Models.Forum
+
+@{
+    ViewData["Title"] = @Model.Title;
+}
+
+<div class="container mt-4">
+    <h1>@Model.Title</h1>
+    <p>@Model.Description</p>
+
+    <h2>Posts</h2>
+    @if (Model.Posts.Any())
+    {
+        <div class="row">
+            @foreach (var post in Model.Posts)
+            {
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5>@post.Title</h5>
+                            <p>@post.Content</p>
+                            <small>Posted by @post.User.Username on @post.CreatedAt.ToShortDateString()</small>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p>No posts in this forum yet.</p>
+    }
+</div>
